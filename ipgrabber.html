@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            background-color: #000000; /* Black background */
+            color: #FFFFFF; /* White text */
+            cursor: none; /* Hide default cursor */
+        }
+
+        /* Background */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #3B82F6, #1E293B); /* Gradient for subtle effect */
+            transform-origin: center;
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+            z-index: -1;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #FFFFFF; /* White cursor */
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s ease-in-out;
+            z-index: 99999;
+        }
+
+        /* Content */
+        .content {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+            padding-top: 100px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeInOut 5s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Typing Effect */
+        .typing-effect {
+            display: inline-block;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #FFFFFF; /* White border for typing effect */
+            width: 0;
+            animation: typing 3s steps(30) 1s forwards, blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Portfolio Section */
+        .portfolio-container {
+            perspective: 1000px; /* Strong perspective for depth */
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .portfolio-item {
+            width: 300px;
+            height: 300px;
+            background-color: #1E293B; /* Dark blue-gray for portfolio items */
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+            display: inline-block;
+            will-change: transform;
+            transform-origin: center;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: white;
+            background-color: #3B82F6; /* Blue buttons */
+            border: 2px solid transparent;
+            border-radius: 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            will-change: transform;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: #ffffff;
+            transition: all 0.4s ease;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        .btn:hover {
+            background-color: #1E293B; /* Dark blue background on hover */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* About Me Section */
+        #about {
+            background: linear-gradient(to top right, #3A80F5, #1E3B8D); /* Gradient from light blue to dark blue */
+            border-radius: 10px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 50px;
+            transition: background 0.1s ease; /* Smooth transition for gradient rotation */
+        }
+
+        #about h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        #about p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: #000000; /* Black background for contact section */
+            padding: 50px;
+            text-align: center;
+        }
+
+        #contact h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        #contact form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #contact input, #contact textarea {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+            background-color: #1E293B; /* Dark gray-blue input fields */
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        #contact button {
+            background-color: #3B82F6; /* Blue button */
+            border: none;
+            padding: 15px 40px;
+            color: #fff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #contact button:hover {
+            background-color: #2563EB; /* Lighter blue on hover */
+        }
+
+        /* Custom Border and Background Styling */
+        .border-t {
+            border-top: 2px solid #1f2937;
+        }
+
+        .bg-black {
+            background-color: #000; /* Black background */
+        }
+
+        .border-gray-800 {
+            border-color: #2d3748;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background -->
+    <div class="background"></div>
+
+    <!-- Content -->
+    <div class="content">
+        <h1>Welcome to My Portfolio</h1>
+        <div class="typing-effect">I do UI/UX/designs/logos</div>
+        <div>
+            <button class="btn" onclick="scrollToAbout()">About Me</button>
+        </div>
+
+        <!-- Portfolio Section -->
+        <div class="portfolio-container">
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/300" alt="Project 1">
+                <div class="overlay">Project 1</div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/300" alt="Project 2">
+                <div class="overlay">Project 2</div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/300" alt="Project 3">
+                <div class="overlay">Project 3</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Me Section -->
+    <section id="about" class="border-t bg-black border-gray-800">
+        <h2>About Me</h2>
+        <p>"const user = {
+    username: "Alex",
+    aboutMe: "A passionate learner of code, exploring new technologies every day!",
+    favoriteTech: ["Figma", "Photoshop", "Roblox Studio"],"}
+</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="border-t bg-black border-gray-800">
+        <h2>Contact Me</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Script to handle mouse interaction and animations -->
+    <script>
+        // Handle mouse movement for background animation
+        const background = document.querySelector('.background');
+        document.addEventListener('mousemove', (e) => {
+            let x = (e.clientX / window.innerWidth) * 100;
+            let y = (e.clientY / window.innerHeight) * 100;
+            background.style.transform = `translate(-${x}%, -${y}%)`;
+
+            // Update cursor position
+            const cursor = document.querySelector('.cursor');
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
+
+        // Handle perspective effect for images
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            portfolioItems.forEach((item) => {
+                const rect = item.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                const deltaX = (mouseX - centerX) / 30; // Adjust for stronger movement
+                const deltaY = (mouseY - centerY) / 30;
+
+                item.style.transform = `rotateY(${deltaX}deg) rotateX(${deltaY}deg)`;
+            });
+        });
+
+        // Scroll to About Section
+        function scrollToAbout() {
+            document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
